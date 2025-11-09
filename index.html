@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelajah Rasa Surabaya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color:#f8f9fa; color:#333; }
+        .navbar { display:flex; justify-content:space-between; align-items:center; padding:1rem 5%; background:white; box-shadow:0 2px 4px rgba(0,0,0,0.1); position:sticky; top:0; z-index:1000; }
+        .navbar-logo { font-size:1.25rem; font-weight:700; color:#d32f2f; display:flex; align-items:center; text-decoration:none; }
+        .navbar-logo img { height:50px; margin-right:10px; }
+        .navbar-nav a { color:#333; text-decoration:none; margin-left:1.25rem; font-weight:600; }
+        .hero { min-height:50vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background-image: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1974&auto=format&fit=crop'); background-size:cover; background-position:center; color:white; padding:2rem; }
+        .hero h1 { font-size:2.4rem; margin-bottom:0.5rem; text-shadow:2px 2px 4px rgba(0,0,0,0.5); }
+        .cta-button { background:#d32f2f; color:white; padding:0.6rem 1.25rem; border-radius:50px; text-decoration:none; font-weight:600; }
+        .section-container { padding:3rem 5%; text-align:center; }
+        .section-title { font-size:1.6rem; margin-bottom:1.25rem; position:relative; display:inline-block; }
+        .section-title::after { content:''; display:block; width:60%; height:4px; background-color:#d32f2f; margin:0.5rem auto 0; }
+        .rekomendasi-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1rem; margin-top:1rem; }
+        .food-card { background:white; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.08); overflow:hidden; text-align:left; transition: transform .25s ease; text-decoration:none; color:inherit; display:block; }
+        .food-card:hover { transform:translateY(-6px); box-shadow:0 10px 20px rgba(0,0,0,0.12); }
+        .food-card img { width:100%; height:150px; object-fit:cover; display:block; }
+        .food-card-content { padding:0.75rem 1rem; }
+        .food-card-content h3 { font-size:1.05rem; margin-bottom:0.25rem; }
+        .registrasi-section { background:#333; color:white; padding:3rem 5%; }
+        #kontak-kami { background-color: #fff; }
+        .footer { background:#212121; color:white; text-align:center; padding:1.25rem 5%; }
+        @media (max-width:768px) { .navbar-nav { display:none; } .hero h1 { font-size:1.6rem; } }
+        .kontak-info a { text-decoration: none; color: #d32f2f; font-weight: 600; }
+        .kontak-info a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <nav class="navbar">
+            <a href="#" class="navbar-logo">
+                <img src="image/logo.png" alt="Logo"> Jelajah Rasa Surabaya
+            </a>
+            <div class="navbar-nav">
+                <a href="#home">Home</a>
+                <a href="#rekomendasi">UMKM</a>
+                <a href="registrasi.html">Registrasi UMKM</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <h1>JELAJAH RASA SURABAYA</h1>
+            <p>Temukan rekomendasi kuliner terbaik pilihanmu di Kota Pahlawan.</p>
+            <a href="#rekomendasi" class="cta-button">Telusuri Kuliner</a>
+        </section>
+        
+        <section class="section-container" id="tentang-kami">
+            <h2 class="section-title">Tentang Kami</h2>
+            <p style="max-width:800px; margin:0 auto; line-height:1.7; text-align:center;">
+                Jelajah Rasa Surabaya adalah platform digital yang membantu masyarakat menemukan kuliner lokal terbaik di Kota Surabaya. Kami mendukung UMKM kuliner agar lebih mudah dijangkau oleh pelanggan melalui peta lokasi, ulasan, dan fitur promosi online. Misi kami sederhana — mengenalkan cita rasa khas Surabaya kepada lebih banyak orang.
+            </p>
+        </section>
+        
+        <section class="section-container" id="rekomendasi">
+            <h2 class="section-title">Rekomendasi Pilihan Untukmu</h2>
+            <div class="rekomendasi-grid" id="rekomendasi-grid-container">
+                </div>
+        </section>
+
+        <section class="section-container registrasi-section" id="registrasi">
+            <h2 class="section-title" style="color:white;">Daftarkan UMKM Kuliner Anda</h2>
+            <p style="max-width:600px; margin-left:auto; margin-right:auto; margin-bottom:1.5rem;">
+                Ingin usaha kulinermu dikenal luas di Surabaya? Daftarkan sekarang secara gratis dan dapatkan eksposur lebih banyak pelanggan!
+            </p>
+            <a href="registrasi.html" class="cta-button">Daftar Sekarang</a>
+        </section>
+        
+        <section class="section-container" id="kontak-kami">
+            <h2 class="section-title">Kontak Kami</h2>
+            <div class="kontak-info" style="margin-top: 1rem; line-height: 1.9; font-size: 1.05rem;">
+                <p>Email: <a href="mailto:jelajahrasa.sby@gmail.com">jelajahrasa.sby@gmail.com</a></p>
+                <p>Instagram: <a href="https://www.instagram.com/jelajahrasa_sby" target="_blank">@jelajahrasa_sby</a></p>
+                <p>Alamat: Jl. Ketintang No.45, Surabaya</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <p>© 2025 | Jelajah Rasa Surabaya by Kelompok 4 Beginner.</p>
+        <p style="margin-top:8px; font-size:0.9rem;">Tim: Try Putri, Elora, Eva, Sheila, Zaffal, Alfiya</p>
+    </footer>
+
+    
+    <script>
+        // Data default dengan STRUKTUR BARU
+        const defaultData = [
+            {
+                nama: "RAWON SETAN",
+                deskripsi: "Rawon legendaris di Surabaya...",
+                foto: "image/rawon.jpg",
+                thumbnails: ["image/rawon.jpg"], // Array dengan 1 foto
+                pricelistData: "Nasi + Rawon - 10000, Rawon Special - 15000",
+                kontakData: "08123456789", 
+                gmapsData: "https://www.google.com/maps?q=Rawon+Setan", 
+                status: "Terverifikasi"
+            },
+            {
+                nama: "LAYAR SEAFOOD",
+                deskripsi: "Seafood segar dan saus khas...",
+                foto: "image/seafood.JPG",
+                thumbnails: ["image/seafood.JPG"], // Array dengan 1 foto
+                pricelistData: "Udang Saus Padang - 45000, Kepiting Saus Tiram - 120000",
+                kontakData: "08123456789",
+                gmapsData: "https://www.google.com/maps?q=Layar+Seafood+Surabaya",
+                status: "Terverifikasi"
+            },
+            {
+                nama: "AYAM BAKAR PRIMARASA",
+                deskripsi: "Ayam bakar dengan bumbu khas...",
+                foto: "image/ayam-bakar.jpg",
+                thumbnails: ["image/ayam-bakar.jpg"],
+                pricelistData: "Ayam Bakar + Nasi - 20000, Paket Keluarga - 75000",
+                kontakData: "08123456789",
+                gmapsData: "https://www.google.com/maps?q=Ayam+Bakar+Primarasa",
+                status: "Terverifikasi"
+            },
+            {
+                nama: "TAHU TEK PAK JAYEN",
+                deskripsi: "Tahu tek legendaris...",
+                foto: "image/tahu-tek.jpeg",
+                thumbnails: ["image/tahu-tek.jpeg"],
+                pricelistData: "Tahu Tek Porsi - 8000, Tahu Tek + Telur - 12000",
+                kontakData: "08123456789",
+                gmapsData: "https://www.google.com/maps?q=Tahu+Tek+Pak+Jayen",
+                status: "Terverifikasi"
+            },
+            {
+                nama: "SATE AYAM PAK MAT",
+                deskripsi: "Sate ayam bumbu kacang...",
+                foto: "image/sate-ayam.jpeg",
+                thumbnails: ["image/sate-ayam.jpeg"],
+                pricelistData: "Sate 10 tusuk - 20000, Sate 15 tusuk - 28000",
+                kontakData: "08123456789",
+                gmapsData: "https://www.google.com/maps?q=Sate+Ayam+Pak+Mat",
+                status: "Terverifikasi"
+            },
+            {
+                nama: "RUJAK CINGUR DELTA",
+                deskripsi: "Rujak cingur khas Surabaya...",
+                foto: "image/rujak-cingur.jpg",
+                thumbnails: ["image/rujak-cingur.jpg"],
+                pricelistData: "Porsi Kecil - 12000, Porsi Besar - 20000",
+                kontakData: "08123456789",
+                gmapsData: "https://www.google.com/maps?q=Rujak+Cingur+Delta",
+                status: "Terverifikasi"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let dataUMKM = JSON.parse(localStorage.getItem('dataUMKM')) || [];
+            let isSeeded = localStorage.getItem('dataSeeded');
+
+            if (!isSeeded) {
+                const combinedData = [...defaultData, ...dataUMKM];
+                const uniqueData = Array.from(new Map(combinedData.map(item => [item.nama, item])).values());
+                
+                dataUMKM = uniqueData;
+                localStorage.setItem('dataUMKM', JSON.stringify(dataUMKM)); 
+                localStorage.setItem('dataSeeded', 'true');
+            }
+            
+            const verifiedUMKM = dataUMKM.filter(umkm => umkm.status === "Terverifikasi");
+            const gridContainer = document.getElementById('rekomendasi-grid-container');
+            gridContainer.innerHTML = ""; 
+
+            if (verifiedUMKM.length > 0) {
+                verifiedUMKM.forEach(umkm => {
+                    const card = document.createElement('a');
+                    card.classList.add('food-card');
+                    card.href = `detail.html?nama=${encodeURIComponent(umkm.nama)}`;
+                    card.innerHTML = `
+                        <img src="${umkm.foto}" alt="${umkm.nama}">
+                        <div class="food-card-content">
+                            <h3>${umkm.nama}</h3>
+                        </div>
+                    `;
+                    gridContainer.appendChild(card);
+                });
+            } else {
+                gridContainer.innerHTML = "<p style='text-align:center;'>Belum ada UMKM terverifikasi.</p>";
+            }
+        });
+    </script>
+</body>
+</html>

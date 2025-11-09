@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Data UMKM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; background:#f7f7f7; margin:0; color:#333; }
+        .navbar { background:#d32f2f; color:white; padding:1rem 2rem; font-weight:600; }
+        main { padding:2rem 5%; }
+        h1 { text-align:center; margin-bottom:2rem; }
+
+        .umkm-card {
+            background:white;
+            border-radius:15px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.1);
+            padding:1.5rem;
+            margin-bottom:1.5rem;
+            display:flex;
+            align-items:flex-start;
+            gap:1.5rem;
+        }
+        .umkm-card img {
+            width:150px; height:150px; object-fit:cover;
+            border-radius:10px; border:2px solid #ccc;
+        }
+        .umkm-info { flex:1; }
+        .umkm-info h2 { margin:0; font-size:1.3rem; color:#d32f2f; }
+        .umkm-info p { margin-top:0.5rem; }
+        
+        /* Style untuk detail data baru */
+        .umkm-details {
+            font-size: 0.9rem;
+            color: #555;
+            background: #f9f9f9;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+        .umkm-details strong { color: #000; }
+
+        .status {
+            display:inline-block;
+            background:#ffc107;
+            color:#000;
+            padding:0.3rem 0.8rem;
+            border-radius:10px;
+            font-size:0.9rem;
+            margin-top:0.5rem;
+        }
+        .status.verified { background:#4caf50; color:white; }
+
+        .action-buttons { margin-top: 1rem; display: flex; gap: 0.5rem; }
+
+        .action-button {
+            padding:0.5rem 1rem;
+            border:none;
+            border-radius:8px;
+            color:white;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+        }
+        .verify-button { background:#4caf50; }
+        .verify-button:hover { background:#388e3c; }
+        
+        /* Tombol Tolak Baru */
+        .delete-button { background: #d32f2f; } 
+        .delete-button:hover { background: #b71c1c; }
+
+        footer { background:#212121; color:white; text-align:center; padding:1rem; margin-top:2rem; }
+    </style>
+</head>
+<body>
+    <header class="navbar">Dashboard Admin - Data Pendaftaran UMKM</header>
+
+    <main>
+        <h1>Daftar Pendaftaran UMKM</h1>
+        <div id="dataContainer"></div>
+    </main>
+
+    <footer>
+        © 2025 | Jelajah Rasa Surabaya — Kelompok 4 Beginner.
+    </footer>
+
+    <script>
+        const dataContainer = document.getElementById('dataContainer');
+        let dataUMKM = JSON.parse(localStorage.getItem('dataUMKM')) || [];
+
+        if (dataUMKM.length === 0) {
+            dataContainer.innerHTML = "<p style='text-align:center;'>Belum ada pendaftaran UMKM.</p>";
+        } else {
+            tampilkanData();
+        }
+
+        function tampilkanData() {
+            dataContainer.innerHTML = ""; 
+            dataUMKM.forEach((umkm, index) => {
+                const card = document.createElement('div');
+                card.classList.add('umkm-card');
+
+                const statusClass = umkm.status === "Terverifikasi" ? "status verified" : "status";
+                const statusText = umkm.status === "Terverifikasi" ? "Terverifikasi" : "Menunggu Verifikasi";
+
+                // Menampilkan semua data baru
+                card.innerHTML = `
+                    <img src="${umkm.foto}" alt="Foto Usaha">
+                    <div class="umkm-info">
+                        <h2>${umkm.nama}</h2>
+                        <span class="${statusClass}">${statusText}</span>
+                        <p><strong>About:</strong> ${umkm.deskripsi}</p>
+                        
+                        <div class="umkm-details">
+                            <strong>Pricelist:</strong> ${umkm.pricelistData || 'N/A'}<br>
+                            <strong>Kontak:</strong> ${umkm.kontakData || 'N/A'}<br>
+                            <strong>Gmaps:</strong> <a href="${umkm.gmapsData}" target="_blank">${umkm.gmapsData || 'N/A'}</a>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            ${statusText !== "Terverifikasi" ? `
+                                <button class="action-button verify-button" onclick="verifikasi(${index})">Verifikasi</button>
+                                <button class="action-button delete-button" onclick="tolak(${index})">Tolak</button>
+                            ` : `
+                                <button class="action-button delete-button" onclick="tolak(${index})">Hapus (Tolak)</button>
+                            `}
+                        </div>
+                    </div>
+                `;
+
+                dataContainer.appendChild(card);
+            });
+        }
+
+        // Fungsi verifikasi
+        function verifikasi(index) {
+            if (confirm("Apakah Anda yakin ingin memverifikasi UMKM ini?")) {
+                dataUMKM[index].status = "Terverifikasi";
+                localStorage.setItem('dataUMKM', JSON.stringify(dataUMKM));
+                tampilkanData(); 
+            }
+        }
+        
+        // FUNGSI TOLAK (BARU)
+        function tolak(index) {
+            if (confirm("Apakah Anda yakin ingin MENOLAK/MENGHAPUS UMKM ini? Data akan hilang permanen.")) {
+                // Hapus 1 item dari array di posisi 'index'
+                dataUMKM.splice(index, 1); 
+                
+                // Simpan array baru ke localStorage
+                localStorage.setItem('dataUMKM', JSON.stringify(dataUMKM));
+                
+                // Tampilkan ulang data
+                tampilkanData(); 
+            }
+        }
+    </script>
+</body>
+</html>

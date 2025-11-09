@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran UMKM - Jelajah Rasa Surabaya</title> 
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ... (CSS Anda sudah benar, tidak diubah) ... */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color:#f8f9fa; color:#333; display: flex; flex-direction: column; min-height: 100vh; }
+        .navbar { display:flex; justify-content:space-between; align-items:center; padding:1rem 5%; background:white; box-shadow:0 2px 4px rgba(0,0,0,0.1); position:sticky; top:0; z-index:1000; }
+        .navbar-logo { font-size:1.25rem; font-weight:700; color:#d32f2f; display:flex; align-items:center; text-decoration:none; }
+        .navbar-logo img { height:50px; margin-right:10px; }
+        .navbar-nav a { color:#333; text-decoration:none; margin-left:1.25rem; font-weight:600; }
+        .registrasi-page-main { padding: 4rem 2rem; flex-grow: 1; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1974&auto=format&fit=crop'); background-size: cover; background-position: center; }
+        .form-container { background: white; padding: 2.5rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 100%; max-width: 600px; text-align: left; }
+        .form-title { text-align: center; font-size: 1.8rem; font-weight: 700; margin-bottom: 2rem; color: #333; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #555; }
+        .form-group input[type="text"], .form-group input[type="url"], .form-group textarea { width: 100%; padding: 0.8rem 1rem; border: none; background-color: #ececec; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 1rem; }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .form-group input[type="file"] { font-family: 'Poppins', sans-serif; font-size: 0.9rem; color: #555; }
+        .submit-button { padding: 0.8rem 1.5rem; border: none; background-color: #5a5a5a; color: white; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem; border-radius: 10px; cursor: pointer; transition: background-color 0.3s ease; display: block; margin: 1.5rem auto 0 auto; }
+        .submit-button:hover { background-color: #333; }
+        .success-message { text-align: center; padding: 2rem 0; }
+        .success-message h3 { color: #2e7d32; font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .success-message p { font-size: 1.1rem; color: #333; line-height: 1.6; }
+        .success-message .back-button { display: inline-block; margin-top: 1.5rem; padding: 0.6rem 1.2rem; background-color: #5a5a5a; color: white; text-decoration: none; font-weight: 600; font-size: 0.9rem; border-radius: 8px; transition: background-color 0.3s ease; }
+        .success-message .back-button:hover { background-color: #333; }
+        .footer { background:#212121; color:white; text-align:center; padding:1.25rem 5%; }
+        @media (max-width:768px) { .navbar-nav { display:none; } .form-container { padding: 1.5rem; } .form-title { font-size: 1.5rem; } }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="navbar-logo"><img src="image/logo.png" alt="Logo"> Jelajah Rasa Surabaya</a>
+            <div class="navbar-nav">
+                <a href="index.html">Home</a>
+                <a href="index.html#rekomendasi">UMKM</a>
+                <a href="registrasi.html" style="color: #d32f2f;">Registrasi UMKM</a>
+            </div>
+        </nav>
+    </header>
+
+<main class="registrasi-page-main">
+    <div class="form-container" id="form-container">
+        <h1 class="form-title">Pendaftaran UMKM</h1>
+        
+        <form id="umkmForm" method="POST" enctype="multipart/form-data">
+            
+            <div class="form-group">
+                <label for="nama-usaha">Nama Usaha:</label>
+                <input type="text" id="nama-usaha" name="nama_usaha" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="upload-foto">Upload Foto (Bisa lebih dari 1):</label>
+                <input type="file" id="upload-foto" name="foto_usaha" required 
+                       accept="image/*" 
+                       multiple>
+            </div> <div class="form-group">
+                <label for="about-usaha">About (Deskripsi Usaha):</label>
+                <textarea id="about-usaha" name="about_usaha" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="pricelist-usaha">Pricelist (Contoh: Nasi Rawon - 10000, Rawon Special - 15000):</label>
+                <textarea id="pricelist-usaha" name="pricelist_usaha" placeholder="Pisahkan item dengan koma (,) atau baris baru" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="kontak-usaha">Kontak (No. WA atau Telepon):</label>
+                <input type="text" id="kontak-usaha" name="kontak_usaha" placeholder="Contoh: 08123456789" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="gmaps-link">Link Google Maps:</label>
+                <input type="url" id="gmaps-link" name="gmaps_link" placeholder="Contoh: https://maps.app.goo.gl/..." required>
+            </div>
+            
+            <button type="submit" class="submit-button">Kirim Pendaftaran</button>
+        </form>
+    </div>
+</main>
+
+<footer class="footer">
+    <p>© 2025 | Jelajah Rasa Surabaya — Kelompok 4 Beginner.</p>
+</footer>
+
+<script>
+    const form = document.getElementById('umkmForm');
+    const formContainer = document.getElementById('form-container');
+
+    // Fungsi helper baru untuk membaca file sebagai Promise
+    function readFileAsDataURL(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            // Tambahkan pesan error yang lebih spesifik
+            reader.onerror = () => reject(new Error(`Gagal membaca file: ${file.name}`));
+            reader.readAsDataURL(file);
+        });
+    }
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const namaUsaha = document.getElementById('nama-usaha').value;
+        const aboutUsaha = document.getElementById('about-usaha').value;
+        const pricelist = document.getElementById('pricelist-usaha').value;
+        const kontak = document.getElementById('kontak-usaha').value;
+        const gmaps = document.getElementById('gmaps-link').value;
+        const fotoInput = document.getElementById('upload-foto');
+
+        if (fotoInput.files.length > 0) {
+            
+            const files = Array.from(fotoInput.files);
+            const fileReadPromises = files.map(readFileAsDataURL);
+            
+            try {
+                const fotoURLs = await Promise.all(fileReadPromises);
+
+                let dataUMKM = JSON.parse(localStorage.getItem('dataUMKM')) || [];
+
+                dataUMKM.push({
+                    nama: namaUsaha,
+                    deskripsi: aboutUsaha, 
+                    foto: fotoURLs[0],      
+                    thumbnails: fotoURLs, 
+                    pricelistData: pricelist,
+                    kontakData: kontak,
+                    gmapsData: gmaps,
+                    status: "Menunggu verifikasi admin"
+                });
+
+                localStorage.setItem('dataUMKM', JSON.stringify(dataUMKM));
+                tampilkanPesanSukses();
+
+            } catch (error) {
+                console.error("Error membaca file:", error);
+                // Tampilkan pesan error yang lebih detail
+                alert(`Terjadi kesalahan saat mengupload gambar.\n\nDetail: ${error.message}`);
+            }
+        } else {
+            alert("Harap upload minimal satu foto usaha!");
+        }
+    });
+
+    function tampilkanPesanSukses() {
+        formContainer.innerHTML = `
+            <h1 class="form-title">Pendaftaran UMKM</h1>
+            <div class="success-message">
+                <h3>Pendaftaran telah diterima.</h3>
+                <p>Menunggu verifikasi admin untuk mengedit detail.</p>
+                <a href="index.html" class="back-button">Kembali ke Halaman Utama</a>
+            </div>
+        `;
+        formContainer.style.textAlign = "center";
+    }
+</script>
+</body>
+</html>

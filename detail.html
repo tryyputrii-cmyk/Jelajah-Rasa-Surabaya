@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Detail Kuliner - Jelajah Rasa Surabaya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ... (CSS Anda yang lama dari detail.html) ... */
+        * { box-sizing: border-box; margin:0; padding:0; }
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1974&auto=format&fit=crop') center/cover fixed; color:#222; min-height:100vh; padding: 2rem 5%; }
+        a.back { display:inline-block; margin-bottom:1rem; text-decoration:none; color:#fff; font-weight:700; background: rgba(0,0,0,0.5); padding: 0.5rem 1rem; border-radius: 8px; }
+        .container { background: rgba(255,255,255,0.98); border-radius: 8px; padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; box-shadow: 0 6px 20px rgba(0,0,0,0.15); backdrop-filter: blur(2px); }
+        .left { display:flex; flex-direction:column; gap:1rem; }
+        .main-image { width:100%; height:360px; object-fit:cover; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+        .thumbs { display:flex; gap:0.6rem; margin-top:0.6rem; flex-wrap: wrap; }
+        .thumbs img { 
+            width:80px; 
+            height:60px; 
+            object-fit:cover; 
+            border-radius:4px; 
+            cursor:pointer; 
+            border:2px solid rgba(0,0,0,0.05); 
+            transition: border-color 0.3s;
+        }
+        .thumbs img:hover { border-color: #d32f2f; }
+        .rating { margin-top:1rem; font-weight:600; color:#f4b400; }
+        .right { background: rgba(255,255,255,0.9); padding:1.6rem; border-radius:6px; }
+        .title { font-size:2.6rem; color:#0b4a6f; letter-spacing:1px; margin-bottom:0.6rem; }
+        .section-heading { font-weight:700; margin-top:1rem; margin-bottom:0.5rem; }
+        .about { line-height:1.6; color:#222; }
+        .pricelist { margin-top:0.6rem; background: rgba(255,255,255,1); padding:0.75rem; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.05); }
+        .pricelist p { display: flex; justify-content: space-between; margin:0.3rem 0; font-family: 'Poppins', sans-serif; }
+        .actions { display:flex; justify-content:space-between; align-items:center; margin-top:2rem; gap:1rem; flex-wrap:wrap; }
+        .btn { background:#0b4a6f; color:white; padding:0.6rem 1rem; border-radius:30px; text-decoration:none; font-weight:600; }
+        .btn-orange { background:#ff8200; }
+        .gmaps { text-decoration:none; color:#0b4a6f; font-weight:600; }
+        .reviews { margin-top:1rem; }
+        .review-item { margin-bottom:0.8rem; display:flex; gap:0.8rem; align-items:flex-start; }
+        .stars { color:#f4c542; font-weight:700; }
+        @media (max-width:900px) { .container { grid-template-columns: 1fr; } .title { font-size:1.6rem; } .main-image { height:260px; } }
+    </style>
+</head>
+<body>
+
+    <a class="back" href="index.html">← Kembali</a>
+
+    <div class="container" id="detail-container">
+        <div class="left">
+            <img id="mainImage" class="main-image" src="" alt="Gambar Utama">
+            <div class="thumbs" id="thumbs">
+                </div>
+            <div class="rating" id="rating">
+                ★★★★★
+            </div>
+        </div>
+        <div class="right">
+            <div class="title" id="title">Memuat...</div>
+            <div>
+                <div class="section-heading">ABOUT :</div>
+                <div class="about" id="about">...</div>
+            </div>
+            <div>
+                <div class="section-heading">Pricelist :</div>
+                <div class="pricelist" id="pricelist">
+                    </div>
+            </div>
+            <div class="actions">
+                <a id="orderBtn" class="btn" href="#" target="_blank">Pesan / Hubungi</a>
+                <a id="learnBtn" class="btn btn-orange" href="#">Pelajari Lebih Lanjut</a>
+                <a id="shareBtn" class="gmaps" href="#" target="_blank">Lihat di GMaps →</a>
+            </div>
+            <div style="margin-top:1.2rem;">
+                <div class="section-heading">Review Pengguna</div>
+                <div class="reviews" id="reviewsList">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name) ? urlParams.get(name).replace(/\+/g, ' ') : null;
+        }
+
+        function parsePricelist(pricelistString) {
+            if (!pricelistString) return [];
+            const items = pricelistString.split(/,|\n/);
+            return items.map(item => {
+                const parts = item.split('-');
+                if (parts.length === 2) {
+                    const name = parts[0].trim();
+                    const price = "Rp " + parseInt(parts[1].trim()).toLocaleString('id-ID');
+                    return { name: name, price: price };
+                }
+                const partsSpace = item.trim().split(' ');
+                if (partsSpace.length > 1) {
+                    const priceRaw = partsSpace.pop().trim();
+                    const name = partsSpace.join(' ').trim();
+                    if (priceRaw && !isNaN(priceRaw)) {
+                        const price = "Rp " + parseInt(priceRaw).toLocaleString('id-ID');
+                        return { name: name, price: price };
+                    }
+                }
+                return { name: item.trim(), price: "" };
+            }).filter(item => item.name); 
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const detailContainer = document.getElementById('detail-container');
+            const umkmNama = getQueryParam('nama');
+            if (!umkmNama) {
+                detailContainer.innerHTML = "<h1>UMKM tidak ditemukan.</h1>";
+                return;
+            }
+
+            const dataUMKM = JSON.parse(localStorage.getItem('dataUMKM')) || [];
+            const item = dataUMKM.find(umkm => umkm.nama.toUpperCase() === umkmNama.toUpperCase());
+
+            if (!item) {
+                detailContainer.innerHTML = `<h1>Data untuk "${umkmNama}" tidak ditemukan.</h1><a href='index.html'>Kembali</a>`;
+                return;
+            }
+            
+            // --- Mengisi Data ---
+            const mainImageEl = document.getElementById('mainImage');
+            
+            document.getElementById('title').textContent = item.nama;
+            mainImageEl.src = item.foto; // Tetapkan gambar utama (dari 'foto')
+            mainImageEl.alt = item.nama;
+
+            // ▼▼▼ PERUBAHAN GALERI THUMBNAIL ▼▼▼
+            const thumbsContainer = document.getElementById('thumbs');
+            thumbsContainer.innerHTML = ''; // Kosongkan
+            
+            // Cek jika 'thumbnails' ada dan merupakan array
+            if (item.thumbnails && Array.isArray(item.thumbnails)) {
+                // Loop semua URL di array thumbnails
+                item.thumbnails.forEach(thumbUrl => {
+                    const img = document.createElement('img');
+                    img.src = thumbUrl;
+                    img.alt = item.nama + " thumbnail";
+                    
+                    // Tambahkan event click untuk mengganti gambar utama
+                    img.addEventListener('click', function() {
+                        mainImageEl.src = thumbUrl;
+                    });
+                    
+                    thumbsContainer.appendChild(img);
+                });
+            } else {
+                // Fallback jika 'thumbnails' tidak ada (untuk data lama)
+                const img = document.createElement('img');
+                img.src = item.foto;
+                img.alt = item.nama;
+                thumbsContainer.appendChild(img);
+            }
+            // ▲▲▲ AKHIR PERUBAHAN GALERI ▲▲▲
+
+
+            const ratingEl = document.getElementById('rating');
+            if (item.rating) {
+                ratingEl.textContent = item.rating;
+            } else {
+                ratingEl.style.display = 'none'; 
+            }
+
+            document.getElementById('about').textContent = item.deskripsi;
+
+            const pricelistEl = document.getElementById('pricelist');
+            pricelistEl.innerHTML = '';
+            const pricelistData = parsePricelist(item.pricelistData);
+            
+            if (pricelistData.length > 0) {
+                pricelistData.forEach(p => {
+                    const pEl = document.createElement('p');
+                    pEl.innerHTML = `<span>${p.name}</span> <span>${p.price}</span>`;
+                    pricelistEl.appendChild(pEl);
+                });
+            } else {
+                pricelistEl.innerHTML = "<p>Pricelist belum tersedia.</p>";
+            }
+
+            const orderBtn = document.getElementById('orderBtn');
+            if (item.kontakData) {
+                let waLink = item.kontakData.startsWith('0') ? '62' + item.kontakData.substring(1) : item.kontakData;
+                orderBtn.href = `https://wa.me/${waLink.replace(/\D/g,'')}`;
+                orderBtn.target = "_blank";
+            } else {
+                orderBtn.style.display = 'none';
+            }
+
+            const gmapsBtn = document.getElementById('shareBtn'); 
+            if (item.gmapsData) {
+                gmapsBtn.href = item.gmapsData;
+                gmapsBtn.target = "_blank";
+            } else {
+                gmapsBtn.style.display = 'none';
+            }
+            
+            const learnBtn = document.getElementById('learnBtn');
+            if (learnBtn) {
+                learnBtn.style.display = 'none';
+            }
+
+            document.getElementById('reviewsList').innerHTML = "<p>Belum ada review.</p>";
+        });
+    </script>
+</body>
+</html>
