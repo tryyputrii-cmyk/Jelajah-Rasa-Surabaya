@@ -20,18 +20,59 @@
         .section-container { padding:3rem 5%; text-align:center; }
         .section-title { font-size:1.6rem; margin-bottom:1.25rem; position:relative; display:inline-block; }
         .section-title::after { content:''; display:block; width:60%; height:4px; background-color:#d32f2f; margin:0.5rem auto 0; }
+        
+        /* === CSS REKOMENDASI & KARTU === */
         .rekomendasi-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1rem; margin-top:1rem; }
         .food-card { background:white; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.08); overflow:hidden; text-align:left; transition: transform .25s ease; text-decoration:none; color:inherit; display:block; }
         .food-card:hover { transform:translateY(-6px); box-shadow:0 10px 20px rgba(0,0,0,0.12); }
         .food-card img { width:100%; height:150px; object-fit:cover; display:block; }
         .food-card-content { padding:0.75rem 1rem; }
         .food-card-content h3 { font-size:1.05rem; margin-bottom:0.25rem; }
+        
+        /* === CSS SEARCH & FILTER === */
+        .search-filter-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #search-bar {
+            flex-grow: 1; 
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+        }
+        #filter-kategori {
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            background-color: white;
+        }
+        
         .registrasi-section { background:#333; color:white; padding:3rem 5%; }
         #kontak-kami { background-color: #fff; }
         .footer { background:#212121; color:white; text-align:center; padding:1.25rem 5%; }
-        @media (max-width:768px) { .navbar-nav { display:none; } .hero h1 { font-size:1.6rem; } }
+        
         .kontak-info a { text-decoration: none; color: #d32f2f; font-weight: 600; }
         .kontak-info a:hover { text-decoration: underline; }
+
+        /* Media Queries */
+        @media (max-width:768px) { 
+            .navbar-nav { display:none; } 
+            .hero h1 { font-size:1.6rem; } 
+        }
+        @media (max-width: 600px) {
+            .search-filter-container {
+                flex-direction: column; 
+            }
+        }
     </style>
 </head>
 <body>
@@ -65,6 +106,16 @@
         
         <section class="section-container" id="rekomendasi">
             <h2 class="section-title">Rekomendasi Pilihan Untukmu</h2>
+
+            <div class="search-filter-container">
+                <input type="search" id="search-bar" placeholder="Cari nama kuliner...">
+                <select id="filter-kategori">
+                    <option value="semua">Semua Kategori</option>
+                    <option value="Halal">Halal</option>
+                    <option value="Non-Halal">Non-Halal</option>
+                </select>
+            </div>
+
             <div class="rekomendasi-grid" id="rekomendasi-grid-container">
                 </div>
         </section>
@@ -94,27 +145,29 @@
 
     
     <script>
-        // Data default dengan STRUKTUR BARU
+        // ▼▼▼ DATA DEFAULT DENGAN KATEGORI BARU ▼▼▼
         const defaultData = [
             {
                 nama: "RAWON SETAN",
                 deskripsi: "Rawon legendaris di Surabaya...",
                 foto: "image/rawon.jpg",
-                thumbnails: ["image/rawon.jpg"], // Array dengan 1 foto
+                thumbnails: ["image/rawon.jpg"],
                 pricelistData: "Nasi + Rawon - 10000, Rawon Special - 15000",
                 kontakData: "08123456789", 
-                gmapsData: "https://www.google.com/maps?q=Rawon+Setan", 
-                status: "Terverifikasi"
+                gmapsData: "http://googleusercontent.com/maps/google.com/0", 
+                status: "Terverifikasi",
+                kategori: "Halal" 
             },
             {
                 nama: "LAYAR SEAFOOD",
                 deskripsi: "Seafood segar dan saus khas...",
                 foto: "image/seafood.JPG",
-                thumbnails: ["image/seafood.JPG"], // Array dengan 1 foto
+                thumbnails: ["image/seafood.JPG"],
                 pricelistData: "Udang Saus Padang - 45000, Kepiting Saus Tiram - 120000",
                 kontakData: "08123456789",
-                gmapsData: "https://www.google.com/maps?q=Layar+Seafood+Surabaya",
-                status: "Terverifikasi"
+                gmapsData: "http://googleusercontent.com/maps/google.com/1",
+                status: "Terverifikasi",
+                kategori: "Halal" 
             },
             {
                 nama: "AYAM BAKAR PRIMARASA",
@@ -123,8 +176,9 @@
                 thumbnails: ["image/ayam-bakar.jpg"],
                 pricelistData: "Ayam Bakar + Nasi - 20000, Paket Keluarga - 75000",
                 kontakData: "08123456789",
-                gmapsData: "https://www.google.com/maps?q=Ayam+Bakar+Primarasa",
-                status: "Terverifikasi"
+                gmapsData: "http://googleusercontent.com/maps/google.com/2",
+                status: "Terverifikasi",
+                kategori: "Halal" 
             },
             {
                 nama: "TAHU TEK PAK JAYEN",
@@ -133,8 +187,9 @@
                 thumbnails: ["image/tahu-tek.jpeg"],
                 pricelistData: "Tahu Tek Porsi - 8000, Tahu Tek + Telur - 12000",
                 kontakData: "08123456789",
-                gmapsData: "https://www.google.com/maps?q=Tahu+Tek+Pak+Jayen",
-                status: "Terverifikasi"
+                gmapsData: "http://googleusercontent.com/maps/google.com/3",
+                status: "Terverifikasi",
+                kategori: "Halal" 
             },
             {
                 nama: "SATE AYAM PAK MAT",
@@ -143,8 +198,9 @@
                 thumbnails: ["image/sate-ayam.jpeg"],
                 pricelistData: "Sate 10 tusuk - 20000, Sate 15 tusuk - 28000",
                 kontakData: "08123456789",
-                gmapsData: "https://www.google.com/maps?q=Sate+Ayam+Pak+Mat",
-                status: "Terverifikasi"
+                gmapsData: "http://googleusercontent.com/maps/google.com/4",
+                status: "Terverifikasi",
+                kategori: "Halal" 
             },
             {
                 nama: "RUJAK CINGUR DELTA",
@@ -153,30 +209,25 @@
                 thumbnails: ["image/rujak-cingur.jpg"],
                 pricelistData: "Porsi Kecil - 12000, Porsi Besar - 20000",
                 kontakData: "08123456789",
-                gmapsData: "https://www.google.com/maps?q=Rujak+Cingur+Delta",
-                status: "Terverifikasi"
+                gmapsData: "http://googleusercontent.com/maps/google.com/5",
+                status: "Terverifikasi",
+                kategori: "Halal" 
             }
         ];
 
-        document.addEventListener('DOMContentLoaded', function() {
-            let dataUMKM = JSON.parse(localStorage.getItem('dataUMKM')) || [];
-            let isSeeded = localStorage.getItem('dataSeeded');
+        
+        // Variabel global untuk data dan elemen
+        let allVerifiedUMKM = [];
+        const gridContainer = document.getElementById('rekomendasi-grid-container');
+        const searchBar = document.getElementById('search-bar');
+        const filterKategori = document.getElementById('filter-kategori');
 
-            if (!isSeeded) {
-                const combinedData = [...defaultData, ...dataUMKM];
-                const uniqueData = Array.from(new Map(combinedData.map(item => [item.nama, item])).values());
-                
-                dataUMKM = uniqueData;
-                localStorage.setItem('dataUMKM', JSON.stringify(dataUMKM)); 
-                localStorage.setItem('dataSeeded', 'true');
-            }
-            
-            const verifiedUMKM = dataUMKM.filter(umkm => umkm.status === "Terverifikasi");
-            const gridContainer = document.getElementById('rekomendasi-grid-container');
+        // FUNGSI UNTUK MERENDER KARTU
+        function renderCards(dataToRender) {
             gridContainer.innerHTML = ""; 
 
-            if (verifiedUMKM.length > 0) {
-                verifiedUMKM.forEach(umkm => {
+            if (dataToRender.length > 0) {
+                dataToRender.forEach(umkm => {
                     const card = document.createElement('a');
                     card.classList.add('food-card');
                     card.href = `detail.html?nama=${encodeURIComponent(umkm.nama)}`;
@@ -189,11 +240,53 @@
                     gridContainer.appendChild(card);
                 });
             } else {
-                gridContainer.innerHTML = "<p style='text-align:center;'>Belum ada UMKM terverifikasi.</p>";
+                gridContainer.innerHTML = "<p style='text-align:center;'>Kuliner tidak ditemukan.</p>";
             }
+        }
+
+        // FUNGSI UNTUK MEMFILTER DAN MERENDER
+        function filterAndRender() {
+            const searchTerm = searchBar.value.toLowerCase();
+            const kategori = filterKategori.value;
+
+            let filteredData = allVerifiedUMKM;
+
+            if (searchTerm) {
+                filteredData = filteredData.filter(umkm => 
+                    umkm.nama.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            if (kategori !== "semua") {
+                filteredData = filteredData.filter(umkm => 
+                    umkm.kategori === kategori
+                );
+            }
+            renderCards(filteredData);
+        }
+
+
+        // SAAT HALAMAN DIMUAT
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            let dataUMKM = JSON.parse(localStorage.getItem('dataUMKM')) || [];
+            let isSeeded = localStorage.getItem('dataSeeded');
+
+            if (!isSeeded) {
+                const combinedData = [...defaultData, ...dataUMKM];
+                const uniqueData = Array.from(new Map(combinedData.map(item => [item.nama, item])).values());
+                
+                dataUMKM = uniqueData;
+                localStorage.setItem('dataUMKM', JSON.stringify(dataUMKM)); 
+                localStorage.setItem('dataSeeded', 'true');
+            }
+            
+            allVerifiedUMKM = dataUMKM.filter(umkm => umkm.status === "Terverifikasi");
+            renderCards(allVerifiedUMKM);
+
+            searchBar.addEventListener('input', filterAndRender);
+            filterKategori.addEventListener('change', filterAndRender);
         });
     </script>
 </body>
-
 </html>
-
