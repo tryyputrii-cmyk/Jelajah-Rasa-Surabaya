@@ -1,212 +1,226 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Detail Kuliner - Jelajah Rasa Surabaya</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* ... (CSS Anda yang lama dari detail.html) ... */
-        * { box-sizing: border-box; margin:0; padding:0; }
-        body { font-family: 'Poppins', sans-serif; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1974&auto=format&fit=crop') center/cover fixed; color:#222; min-height:100vh; padding: 2rem 5%; }
-        a.back { display:inline-block; margin-bottom:1rem; text-decoration:none; color:#fff; font-weight:700; background: rgba(0,0,0,0.5); padding: 0.5rem 1rem; border-radius: 8px; }
-        .container { background: rgba(255,255,255,0.98); border-radius: 8px; padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; box-shadow: 0 6px 20px rgba(0,0,0,0.15); backdrop-filter: blur(2px); }
-        .left { display:flex; flex-direction:column; gap:1rem; }
-        .main-image { width:100%; height:360px; object-fit:cover; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-        .thumbs { display:flex; gap:0.6rem; margin-top:0.6rem; flex-wrap: wrap; }
-        .thumbs img { 
-            width:80px; 
-            height:60px; 
-            object-fit:cover; 
-            border-radius:4px; 
-            cursor:pointer; 
-            border:2px solid rgba(0,0,0,0.05); 
-            transition: border-color 0.3s;
-        }
-        .thumbs img:hover { border-color: #d32f2f; }
-        .rating { margin-top:1rem; font-weight:600; color:#f4b400; }
-        .right { background: rgba(255,255,255,0.9); padding:1.6rem; border-radius:6px; }
-        .title { font-size:2.6rem; color:#0b4a6f; letter-spacing:1px; margin-bottom:0.6rem; }
-        .section-heading { font-weight:700; margin-top:1rem; margin-bottom:0.5rem; }
-        .about { line-height:1.6; color:#222; }
-        .pricelist { margin-top:0.6rem; background: rgba(255,255,255,1); padding:0.75rem; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.05); }
-        .pricelist p { display: flex; justify-content: space-between; margin:0.3rem 0; font-family: 'Poppins', sans-serif; }
-        .actions { display:flex; justify-content:space-between; align-items:center; margin-top:2rem; gap:1rem; flex-wrap:wrap; }
-        .btn { background:#0b4a6f; color:white; padding:0.6rem 1rem; border-radius:30px; text-decoration:none; font-weight:600; }
-        .btn-orange { background:#ff8200; }
-        .gmaps { text-decoration:none; color:#0b4a6f; font-weight:600; }
-        .reviews { margin-top:1rem; }
-        .review-item { margin-bottom:0.8rem; display:flex; gap:0.8rem; align-items:flex-start; }
-        .stars { color:#f4c542; font-weight:700; }
-        @media (max-width:900px) { .container { grid-template-columns: 1fr; } .title { font-size:1.6rem; } .main-image { height:260px; } }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detail UMKM — Jelajah Rasa Surabaya</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Poppins',sans-serif;background:#f8f9fa;color:#333}
+    .navbar{display:flex;justify-content:space-between;align-items:center;padding:1rem 5%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.1)}
+    .navbar-logo{font-size:1.1rem;font-weight:700;color:#d32f2f;display:flex;align-items:center;text-decoration:none}
+    .navbar-logo img{height:50px;margin-right:10px}
+    .navbar-nav a{color:#333;text-decoration:none;margin-left:1.25rem;font-weight:600}
+    main{padding:2rem 5%;max-width:1000px;margin:auto}
+    .hero{display:grid;grid-template-columns:1fr 1.2fr;gap:1rem}
+    .hero img{width:100%;height:300px;object-fit:cover;border-radius:12px}
+    .badge{display:inline-block;background:#f7f7f7;border:1px dashed #e0e0e0;border-radius:999px;padding:.25rem .6rem;font-size:.8rem;margin-right:.35rem}
+    .rating{display:flex;align-items:center;gap:.35rem;font-size:1rem;color:#f59e0b;margin:.35rem 0}
+    .muted{color:#666}
+    .sec{background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.08);padding:1rem;margin-top:1rem}
+    .row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}
+    .btn{background:#d32f2f;color:#fff;border:0;border-radius:10px;padding:.6rem .8rem;text-decoration:none}
+    .btn.ghost{background:transparent;color:#d32f2f;border:1px solid #d32f2f}
+    .thumbs{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.4rem}
+    .thumbs img{width:70px;height:70px;object-fit:cover;border-radius:8px;border:1px solid #eee}
+    .review{border-top:1px solid #eee;padding:.8rem 0}
+    .stars input{display:none}
+    .stars label{cursor:pointer;font-size:1.4rem;color:#ccc}
+    .stars input:checked ~ label, .stars label:hover, .stars label:hover ~ label{color:#f59e0b}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}
+    /* Tampilkan pricelist per-baris (vertikal) */
+.price-list{
+  list-style: disc;
+  padding-left: 1.25rem;
+  line-height: 1.7;
+  margin-top: .5rem;
+}
+}
+  </style>
 </head>
 <body>
+  <header class="navbar">
+    <a href="index.html" class="navbar-logo"><img src="image/logo.png" alt=""> Jelajah Rasa Surabaya</a>
+    <nav class="navbar-nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#rekomendasi">UMKM</a>
+      <a href="registrasi.html">Registrasi UMKM</a>
+    </nav>
+  </header>
 
-    <a class="back" href="index.html">← Kembali</a>
+  <main>
+    <div id="content"></div>
 
-    <div class="container" id="detail-container">
-        <div class="left">
-            <img id="mainImage" class="main-image" src="" alt="Gambar Utama">
-            <div class="thumbs" id="thumbs">
-                </div>
-            <div class="rating" id="rating">
-                ★★★★★
-            </div>
+    <!-- REVIEW SECTION -->
+    <section class="sec" id="reviewsSec" style="display:none">
+      <h2>Ulasan Pengunjung</h2>
+      <div id="avgWrap" class="rating"></div>
+      <div id="reviewsList"></div>
+    </section>
+
+    <section class="sec">
+      <h2>Tulis Review</h2>
+      <form id="reviewForm">
+        <div style="margin:.5rem 0">
+          <div class="stars" style="direction:rtl;text-align:left">
+            <input type="radio" id="s5" name="rating" value="5"><label for="s5">★</label>
+            <input type="radio" id="s4" name="rating" value="4"><label for="s4">★</label>
+            <input type="radio" id="s3" name="rating" value="3"><label for="s3">★</label>
+            <input type="radio" id="s2" name="rating" value="2"><label for="s2">★</label>
+            <input type="radio" id="s1" name="rating" value="1" checked><label for="s1">★</label>
+          </div>
         </div>
-        <div class="right">
-            <div class="title" id="title">Memuat...</div>
-            <div>
-                <div class="section-heading">ABOUT :</div>
-                <div class="about" id="about">...</div>
-            </div>
-            <div>
-                <div class="section-heading">Pricelist :</div>
-                <div class="pricelist" id="pricelist">
-                    </div>
-            </div>
-            <div class="actions">
-                <a id="orderBtn" class="btn" href="#" target="_blank">Pesan / Hubungi</a>
-                <a id="learnBtn" class="btn btn-orange" href="#">Pelajari Lebih Lanjut</a>
-                <a id="shareBtn" class="gmaps" href="#" target="_blank">Lihat di GMaps →</a>
-            </div>
-            <div style="margin-top:1.2rem;">
-                <div class="section-heading">Review Pengguna</div>
-                <div class="reviews" id="reviewsList">
-                    </div>
-            </div>
+        <textarea id="comment" placeholder="Tulis pengalamanmu…" style="width:97%;min-height:90px;padding:.8rem;border:1px solid #e5e7eb;border-radius:10px"></textarea>
+        <div style="margin-top:.6rem">
+          <label><strong>Tambah media</strong> (opsional, bisa lebih dari 1): </label>
+          <input type="file" id="media" accept="image/*" multiple>
         </div>
-    </div>
+        <button class="btn" style="margin-top:.8rem" type="submit">Kirim Review</button>
+      </form>
+    </section>
+  </main>
 
-    
-    <script>
-        function getQueryParam(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name) ? urlParams.get(name).replace(/\+/g, ' ') : null;
+  <script>
+    const LS_KEY = 'dataUMKM';
+    const REV_KEY = 'jrs_reviews_v1';
+
+    const getAll = ()=> JSON.parse(localStorage.getItem(LS_KEY)||'[]');
+    const getReviews = ()=> JSON.parse(localStorage.getItem(REV_KEY)||'[]');
+    const setReviews = (arr)=> localStorage.setItem(REV_KEY, JSON.stringify(arr));
+    const avgStars = (arr)=> arr.length? Math.round((arr.reduce((a,b)=>a+b.rating,0)/arr.length)*10)/10 : 0;
+    const starsHTML = (avg,count)=> {
+      const full = Math.round(avg);
+      const s = '★'.repeat(full)+'☆'.repeat(5-full);
+      return `<span>${s}</span><span class="muted"> (${avg||0}${count!==undefined? ', '+count+' ulasan':''})</span>`;
+    };
+    const readFiles = (files)=> Promise.all([...(files||[])].map(f=>new Promise((res,rej)=>{
+      const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=()=>rej(); r.readAsDataURL(f);
+    })));
+
+    const params = new URLSearchParams(location.search);
+    const name = params.get('nama');
+function renderPriceList(raw){
+    const ul = document.createElement('ul');
+    ul.className = 'price-list';
+    if(!raw){ ul.innerHTML = '<li>-</li>'; return ul.outerHTML; }
+
+    // 1) Pecah dulu dengan koma / titik-koma / baris baru
+    let parts = raw.split(/[,;\n]+/).map(s=>s.trim()).filter(Boolean);
+
+    // 2) Kalau format kamu “Nama Menu - 10000”, rapikan tiap item
+    if(parts.length){
+      parts = parts.map(p=>{
+        // ambil "nama — angka"
+        const m = p.match(/(.+?)\s*[-–:]\s*(\d[\d. ]*)$/);
+        if(m){
+          const nama = m[1].trim();
+          const harga = m[2].replace(/\.(?=\d{3}\b)/g,'').replace(/\s+/g,''); // 4.000 → 4000
+          return `${nama} ${harga}`;
         }
+        return p;
+      });
+    }else{
+      // 3) Fallback kalau teks tidak punya koma:
+      const re=/([A-Za-zÀ-ÿ0-9/()[\]'+., -]+?)\s(\d{3,}(?:\.\d{3})?)/g;
+      let m; parts=[];
+      while((m=re.exec(raw))!==null){
+        parts.push(`${m[1].trim()} ${m[2].replace(/\.(?=\d{3}\b)/g,'')}`);
+      }
+      if(!parts.length) parts=[raw]; // benar-benar fallback
+    }
 
-        function parsePricelist(pricelistString) {
-            if (!pricelistString) return [];
-            const items = pricelistString.split(/,|\n/);
-            return items.map(item => {
-                const parts = item.split('-');
-                if (parts.length === 2) {
-                    const name = parts[0].trim();
-                    const price = "Rp " + parseInt(parts[1].trim()).toLocaleString('id-ID');
-                    return { name: name, price: price };
-                }
-                const partsSpace = item.trim().split(' ');
-                if (partsSpace.length > 1) {
-                    const priceRaw = partsSpace.pop().trim();
-                    const name = partsSpace.join(' ').trim();
-                    if (priceRaw && !isNaN(priceRaw)) {
-                        const price = "Rp " + parseInt(priceRaw).toLocaleString('id-ID');
-                        return { name: name, price: price };
-                    }
-                }
-                return { name: item.trim(), price: "" };
-            }).filter(item => item.name); 
-        }
+    parts.forEach(t=>{
+      const li=document.createElement('li');
+      li.textContent=t;
+      ul.appendChild(li);
+    });
+    return ul.outerHTML;
+  }
+    function renderDetail(){
+      const data = getAll().find(x=>x.nama===name);
+      const c = document.getElementById('content');
+      if(!data){ c.innerHTML='<p class="muted">UMKM tidak ditemukan.</p>'; return; }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const detailContainer = document.getElementById('detail-container');
-            const umkmNama = getQueryParam('nama');
-            if (!umkmNama) {
-                detailContainer.innerHTML = "<h1>UMKM tidak ditemukan.</h1>";
-                return;
-            }
+      const avg = avgStars(getReviews().filter(r=>r.umkm===name));
+      const ratingBar = `<div class="rating"><span>${'★'.repeat(Math.round(avg))}${'☆'.repeat(5-Math.round(avg))}</span><span class="muted">(${avg||0})</span></div>`;
 
-            const dataUMKM = JSON.parse(localStorage.getItem('dataUMKM')) || [];
-            const item = dataUMKM.find(umkm => umkm.nama.toUpperCase() === umkmNama.toUpperCase());
+      c.innerHTML = `
+        <section class="hero">
+          <div>
+            <img src="${(data.thumbnails&&data.thumbnails[0])||data.foto}" alt="${data.nama}">
+            <div class="thumbs">
+              ${(data.thumbnails||[]).map(src=>`<img src="${src}" alt="">`).join('')}
+            </div>
+          </div>
+          <div>
+            <h1>${data.nama}</h1>
+            ${ratingBar}
+            <div style="margin:.4rem 0">
+              <span class="badge">${data.kategori||'-'}</span>
+              <span class="badge">Area: ${data.area||'-'}</span>
+            </div>
+            <p class="muted">${data.deskripsi||'-'}</p>
+            <div class="row" style="margin-top:.6rem">
+              ${data.kontakData? `<a class="btn ghost" href="https://wa.me/${String(data.kontakData).replace(/^0/,'62')}" target="_blank" rel="noopener">WhatsApp</a>`:''}
+              ${data.gmapsData? `<a class="btn" href="${data.gmapsData}" target="_blank" rel="noopener">Buka di Maps</a>`:''}
+            </div>
+          </div>
+        </section>
 
-            if (!item) {
-                detailContainer.innerHTML = `<h1>Data untuk "${umkmNama}" tidak ditemukan.</h1><a href='index.html'>Kembali</a>`;
-                return;
-            }
-            
-            // --- Mengisi Data ---
-            const mainImageEl = document.getElementById('mainImage');
-            
-            document.getElementById('title').textContent = item.nama;
-            mainImageEl.src = item.foto; // Tetapkan gambar utama (dari 'foto')
-            mainImageEl.alt = item.nama;
+        <section class="sec">
+  <h2>Pricelist</h2>
+  <div style="margin-top:.4rem">
+    ${renderPriceList(data.pricelistData||'')}
+  </div>
+</section>
+      `;
 
-            // ▼▼▼ PERUBAHAN GALERI THUMBNAIL ▼▼▼
-            const thumbsContainer = document.getElementById('thumbs');
-            thumbsContainer.innerHTML = ''; // Kosongkan
-            
-            // Cek jika 'thumbnails' ada dan merupakan array
-            if (item.thumbnails && Array.isArray(item.thumbnails)) {
-                // Loop semua URL di array thumbnails
-                item.thumbnails.forEach(thumbUrl => {
-                    const img = document.createElement('img');
-                    img.src = thumbUrl;
-                    img.alt = item.nama + " thumbnail";
-                    
-                    // Tambahkan event click untuk mengganti gambar utama
-                    img.addEventListener('click', function() {
-                        mainImageEl.src = thumbUrl;
-                    });
-                    
-                    thumbsContainer.appendChild(img);
-                });
-            } else {
-                // Fallback jika 'thumbnails' tidak ada (untuk data lama)
-                const img = document.createElement('img');
-                img.src = item.foto;
-                img.alt = item.nama;
-                thumbsContainer.appendChild(img);
-            }
-            // ▲▲▲ AKHIR PERUBAHAN GALERI ▲▲▲
+      renderReviews();
+    }
 
+    function renderReviews(){
+      const all = getReviews().filter(r=>r.umkm===name).sort((a,b)=>b.ts-a.ts);
+      const wrap = document.getElementById('reviewsSec');
+      const list = document.getElementById('reviewsList');
+      const avgWrap = document.getElementById('avgWrap');
 
-            const ratingEl = document.getElementById('rating');
-            if (item.rating) {
-                ratingEl.textContent = item.rating;
-            } else {
-                ratingEl.style.display = 'none'; 
-            }
+      if(!all.length){ wrap.style.display='none'; return; }
+      wrap.style.display='block';
 
-            document.getElementById('about').textContent = item.deskripsi;
+      const avg = avgStars(all);
+      avgWrap.innerHTML = `<div class="rating">${'★'.repeat(Math.round(avg))}${'☆'.repeat(5-Math.round(avg))}<span class="muted"> (${avg}, ${all.length} ulasan)</span></div>`;
 
-            const pricelistEl = document.getElementById('pricelist');
-            pricelistEl.innerHTML = '';
-            const pricelistData = parsePricelist(item.pricelistData);
-            
-            if (pricelistData.length > 0) {
-                pricelistData.forEach(p => {
-                    const pEl = document.createElement('p');
-                    pEl.innerHTML = `<span>${p.name}</span> <span>${p.price}</span>`;
-                    pricelistEl.appendChild(pEl);
-                });
-            } else {
-                pricelistEl.innerHTML = "<p>Pricelist belum tersedia.</p>";
-            }
+      list.innerHTML = all.map(r=>`
+        <div class="review">
+          <div class="rating">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)} <span class="muted" style="margin-left:.35rem">${new Date(r.ts).toLocaleString('id-ID')}</span></div>
+          <div class="muted">${(r.comment||'').replace(/</g,'&lt;')}</div>
+          ${r.media?.length? `<div class="thumbs">${r.media.map(m=>`<img src="${m}" alt="">`).join('')}</div>`:''}
+        </div>
+      `).join('');
+    }
 
-            const orderBtn = document.getElementById('orderBtn');
-            if (item.kontakData) {
-                let waLink = item.kontakData.startsWith('0') ? '62' + item.kontakData.substring(1) : item.kontakData;
-                orderBtn.href = `https://wa.me/${waLink.replace(/\D/g,'')}`;
-                orderBtn.target = "_blank";
-            } else {
-                orderBtn.style.display = 'none';
-            }
+    document.addEventListener('DOMContentLoaded', ()=>{
+      renderDetail();
 
-            const gmapsBtn = document.getElementById('shareBtn'); 
-            if (item.gmapsData) {
-                gmapsBtn.href = item.gmapsData;
-                gmapsBtn.target = "_blank";
-            } else {
-                gmapsBtn.style.display = 'none';
-            }
-            
-            const learnBtn = document.getElementById('learnBtn');
-            if (learnBtn) {
-                learnBtn.style.display = 'none';
-            }
+      document.getElementById('reviewForm').addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const rating = Number(document.querySelector('input[name="rating"]:checked')?.value||1);
+        const comment = document.getElementById('comment').value.trim();
+        const mediaFiles = document.getElementById('media').files;
+        const media = await readFiles(mediaFiles);
 
-            document.getElementById('reviewsList').innerHTML = "<p>Belum ada review.</p>";
-        });
-    </script>
+        const arr = getReviews();
+        arr.push({ umkm:name, rating, comment, media, ts:Date.now() });
+        setReviews(arr);
+
+        // Reset form and re-render
+        e.target.reset();
+        renderDetail();
+        window.scrollTo({top:0,behavior:'smooth'});
+      });
+    });
+  </script>
 </body>
 </html>
