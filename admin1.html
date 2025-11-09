@@ -22,35 +22,20 @@
             align-items:flex-start;
             gap:1.5rem;
         }
-        .umkm-image-container {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .umkm-image-container img.main-img {
+        .umkm-card img {
             width:150px; height:150px; object-fit:cover;
             border-radius:10px; border:2px solid #ccc;
         }
-        .umkm-thumbnails {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-            max-width: 150px;
-        }
-        .umkm-thumbnails img {
-            width: 40px; height: 40px; object-fit: cover;
-            border-radius: 4px; border: 1px solid #ddd;
-        }
-
         .umkm-info { flex:1; }
-        .umkm-info h2 { margin:0; font-size:1.3rem; color:#d32f2f; display: flex; align-items: center; gap: 10px; }
+        .umkm-info h2 { margin:0; font-size:1.3rem; color:#d32f2f; }
         .umkm-info p { margin-top:0.5rem; }
         
+        /* Style untuk detail data baru */
         .umkm-details {
             font-size: 0.9rem;
             color: #555;
             background: #f9f9f9;
-            padding: 0.8rem 1rem;
+            padding: 0.5rem 1rem;
             border-radius: 8px;
             margin-top: 1rem;
             line-height: 1.6;
@@ -61,22 +46,15 @@
             display:inline-block;
             background:#ffc107;
             color:#000;
-            padding:0.2rem 0.6rem;
+            padding:0.3rem 0.8rem;
             border-radius:10px;
-            font-size:0.85rem;
+            font-size:0.9rem;
+            margin-top:0.5rem;
         }
         .status.verified { background:#4caf50; color:white; }
 
-        .kategori-label {
-            display: inline-block;
-            background: #0b4a6f;
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 10px;
-            font-size: 0.85rem;
-        }
-
         .action-buttons { margin-top: 1rem; display: flex; gap: 0.5rem; }
+
         .action-button {
             padding:0.5rem 1rem;
             border:none;
@@ -88,6 +66,8 @@
         }
         .verify-button { background:#4caf50; }
         .verify-button:hover { background:#388e3c; }
+        
+        /* Tombol Tolak Baru */
         .delete-button { background: #d32f2f; } 
         .delete-button:hover { background: #b71c1c; }
 
@@ -108,15 +88,15 @@
 
     <script>
         const dataContainer = document.getElementById('dataContainer');
-        
-        function renderAdminData() {
-            let dataUMKM = JSON.parse(localStorage.getItem('dataUMKM')) || [];
+        let dataUMKM = JSON.parse(localStorage.getItem('dataUMKM')) || [];
 
-            if (dataUMKM.length === 0) {
-                dataContainer.innerHTML = "<p style='text-align:center;'>Belum ada pendaftaran UMKM.</p>";
-                return;
-            }
+        if (dataUMKM.length === 0) {
+            dataContainer.innerHTML = "<p style='text-align:center;'>Belum ada pendaftaran UMKM.</p>";
+        } else {
+            tampilkanData();
+        }
 
+        function tampilkanData() {
             dataContainer.innerHTML = ""; 
             dataUMKM.forEach((umkm, index) => {
                 const card = document.createElement('div');
@@ -124,42 +104,19 @@
 
                 const statusClass = umkm.status === "Terverifikasi" ? "status verified" : "status";
                 const statusText = umkm.status === "Terverifikasi" ? "Terverifikasi" : "Menunggu Verifikasi";
-                
-                // Label Kategori
-                const kategoriLabel = umkm.kategori ? `<span class="kategori-label">${umkm.kategori}</span>` : '';
 
-                // Generate Thumbnail HTML
-                let thumbnailsHTML = '';
-                if (umkm.thumbnails && Array.isArray(umkm.thumbnails) && umkm.thumbnails.length > 1) {
-                    thumbnailsHTML = '<div class="umkm-thumbnails">';
-                    // Tampilkan maksimal 3 thumbnail tambahan
-                    umkm.thumbnails.slice(0, 3).forEach(thumb => {
-                         thumbnailsHTML += `<img src="${thumb}" alt="thumb">`;
-                    });
-                    if (umkm.thumbnails.length > 3) {
-                        thumbnailsHTML += `<span style="font-size:0.8rem; color:#999;">+${umkm.thumbnails.length - 3}</span>`;
-                    }
-                    thumbnailsHTML += '</div>';
-                }
-
+                // Menampilkan semua data baru
                 card.innerHTML = `
-                    <div class="umkm-image-container">
-                        <img src="${umkm.foto}" alt="Foto Usaha" class="main-img">
-                        ${thumbnailsHTML}
-                    </div>
+                    <img src="${umkm.foto}" alt="Foto Usaha">
                     <div class="umkm-info">
-                        <h2>
-                            ${umkm.nama} 
-                            ${kategoriLabel}
-                            <span class="${statusClass}">${statusText}</span>
-                        </h2>
-                        
+                        <h2>${umkm.nama}</h2>
+                        <span class="${statusClass}">${statusText}</span>
                         <p><strong>About:</strong> ${umkm.deskripsi}</p>
                         
                         <div class="umkm-details">
-                            <strong>Pricelist:</strong> ${umkm.pricelistData || '-'}<br>
-                            <strong>Kontak:</strong> ${umkm.kontakData || '-'}<br>
-                            <strong>Gmaps:</strong> <a href="${umkm.gmapsData}" target="_blank">${umkm.gmapsData ? 'Link Peta' : '-'}</a>
+                            <strong>Pricelist:</strong> ${umkm.pricelistData || 'N/A'}<br>
+                            <strong>Kontak:</strong> ${umkm.kontakData || 'N/A'}<br>
+                            <strong>Gmaps:</strong> <a href="${umkm.gmapsData}" target="_blank">${umkm.gmapsData || 'N/A'}</a>
                         </div>
                         
                         <div class="action-buttons">
@@ -167,7 +124,7 @@
                                 <button class="action-button verify-button" onclick="verifikasi(${index})">Verifikasi</button>
                                 <button class="action-button delete-button" onclick="tolak(${index})">Tolak</button>
                             ` : `
-                                <button class="action-button delete-button" onclick="tolak(${index})">Hapus Data</button>
+                                <button class="action-button delete-button" onclick="tolak(${index})">Hapus (Tolak)</button>
                             `}
                         </div>
                     </div>
@@ -177,26 +134,28 @@
             });
         }
 
+        // Fungsi verifikasi
         function verifikasi(index) {
-            let dataUMKM = JSON.parse(localStorage.getItem('dataUMKM')) || [];
-            if (confirm(`Verifikasi "${dataUMKM[index].nama}" agar muncul di halaman utama?`)) {
+            if (confirm("Apakah Anda yakin ingin memverifikasi UMKM ini?")) {
                 dataUMKM[index].status = "Terverifikasi";
                 localStorage.setItem('dataUMKM', JSON.stringify(dataUMKM));
-                renderAdminData(); 
+                tampilkanData(); 
             }
         }
         
+        // FUNGSI TOLAK (BARU)
         function tolak(index) {
-            let dataUMKM = JSON.parse(localStorage.getItem('dataUMKM')) || [];
-            if (confirm(`Yakin ingin MENGHAPUS PERMANEN data "${dataUMKM[index].nama}"?`)) {
+            if (confirm("Apakah Anda yakin ingin MENOLAK/MENGHAPUS UMKM ini? Data akan hilang permanen.")) {
+                // Hapus 1 item dari array di posisi 'index'
                 dataUMKM.splice(index, 1); 
+                
+                // Simpan array baru ke localStorage
                 localStorage.setItem('dataUMKM', JSON.stringify(dataUMKM));
-                renderAdminData(); 
+                
+                // Tampilkan ulang data
+                tampilkanData(); 
             }
         }
-
-        // Render saat halaman dimuat
-        document.addEventListener('DOMContentLoaded', renderAdminData);
     </script>
 </body>
 </html>
